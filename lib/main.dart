@@ -27,36 +27,57 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: _floatingActionButton(),
-        appBar: AppBar(
-          title: Text(
-            "Self Discipline",
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-          centerTitle: true,
-        ),
-        body: Container(
-          margin: EdgeInsets.all(4.0),
-          child: ListView(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  _cardContainer("50 Pushups", true),
-                  _cardContainer("Learn React for an hour", true),
-                  _cardContainer("Drink a bottle of water", false),
-                  _cardContainer("Fart hard", false),
-                  _cardContainer("Sleep before 11:30", true),
-                  _cardContainer("Lift weights 30 times", false),
-                  _cardContainer("Fart hard", false),
-                  _cardContainer("Sleep before 11:30", true),
-                  _cardContainer("Lift weights 30 times", false),
-                  _cardContainer("Fart hard", false),
-                  _cardContainer("Sleep before 11:30", true),
-                  _cardContainer("Lift weights 30 times", false),
-                ],
-              ),
-            ],
-          ),
-        ));
+        appBar: _appBar(),
+        body: _buildBody());
+  }
+
+  FloatingActionButton _floatingActionButton() {
+    return FloatingActionButton(
+      tooltip: "Add a task",
+      onPressed: () {},
+      child: Icon(Icons.add),
+      backgroundColor: Colors.blue,
+    );
+  }
+
+  AppBar _appBar() {
+    return AppBar(
+      title: Text(
+        "Self Discipline",
+        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+      ),
+      centerTitle: true,
+    );
+  }
+
+  Container _buildBody() {
+    return Container(
+      margin: EdgeInsets.all(4.0),
+      child: ListView(
+        children: <Widget>[
+          _bodyContents(),
+        ],
+      ),
+    );
+  }
+
+  Column _bodyContents() {
+    return Column(
+      children: <Widget>[
+        _cardContainer("50 Pushups", true),
+        _cardContainer("Learn React for an hour", true),
+        _cardContainer("Drink a bottle of water", false),
+        _cardContainer("Fart hard", false),
+        _cardContainer("Sleep before 11:30", true),
+        _cardContainer("Lift weights 30 times", false),
+        _cardContainer("Fart hard", false),
+        _cardContainer("Sleep before 11:30", true),
+        _cardContainer("Lift weights 30 times", false),
+        _cardContainer("Fart hard", false),
+        _cardContainer("Sleep before 11:30", true),
+        _cardContainer("Lift weights 30 times", false),
+      ],
+    );
   }
 
   Container _cardContainer(String task, bool isComplete) {
@@ -93,7 +114,6 @@ class _MyHomePageState extends State<MyHomePage> {
         overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.left,
         style: TextStyle(
-          fontFamily: 'JosefinSans',
           fontWeight: FontWeight.bold,
           fontSize: 17.0,
           letterSpacing: 1,
@@ -112,15 +132,6 @@ class _MyHomePageState extends State<MyHomePage> {
         color: !isComplete ? Colors.grey : Colors.green,
         size: 40.0,
       ),
-    );
-  }
-
-  FloatingActionButton _floatingActionButton() {
-    return FloatingActionButton(
-      tooltip: "Add a task",
-      onPressed: () {},
-      child: Icon(Icons.add),
-      backgroundColor: Colors.blue,
     );
   }
 }
