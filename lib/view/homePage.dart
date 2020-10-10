@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_page_transition/flutter_page_transition.dart';
 import 'package:self_discipline/view/addNewItemPage.dart';
+import 'package:self_discipline/view/bottomSheet.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -56,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
         _cardContainer("Drink a bottle of water", false, 34, 12),
         _cardContainer("Fart hard", false, 10, 2),
         _cardContainer("Sleep before 11:30", true, 30, 27),
-        _cardContainer("Lift weights 30 times 30 times 30 times 30 times 30 times", false, 15, 13),
+        _cardContainer("Lift weights 30 times", false, 15, 13),
         _cardContainer("Fart hard", false, 20, 16),
         _cardContainer("Sleep before 11:30", true, 5, 2),
         _cardContainer("Lift weights 30 times", false, 7, 0),
@@ -67,22 +68,30 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Container _cardContainer(String task, bool isComplete, int totalDays, int completedDays) {
+  Container _cardContainer(
+      String task, bool isComplete, int totalDays, int completedDays) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.0),
       ),
       height: 80.0,
       margin: EdgeInsets.only(top: 2.0),
-      child: Card(
-        color: Colors.white70,
-        elevation: 7.0,
-        child: _cardContent(task, Icons.check, isComplete, totalDays, completedDays),
+      child: InkWell(
+        onTap: (){
+          showConfirmBottomSheet(completedDays, totalDays, isComplete);
+        },
+        child: Card(
+          color: Colors.white70,
+          elevation: 7.0,
+          child: _cardContent(
+              task, Icons.check, isComplete, totalDays, completedDays),
+        ),
       ),
     );
   }
 
-  Container _cardContent(String task, IconData iconData, bool isComplete, int totalDays, int completedDays) {
+  Container _cardContent(String task, IconData iconData, bool isComplete,
+      int totalDays, int completedDays) {
     return Container(
       color: Colors.white70,
       child: Column(
@@ -96,7 +105,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
           ),
-          Container(child: _progressIndicator(totalDays, completedDays, isComplete)),
+          Container(
+              child: _progressIndicator(totalDays, completedDays, isComplete)),
         ],
       ),
     );
@@ -151,5 +161,19 @@ class _MyHomePageState extends State<MyHomePage> {
       selectedColor: isCompleteCurrentDay ? Colors.green : Colors.yellow,
       unselectedColor: Colors.grey,
     );
+  }
+
+  showConfirmBottomSheet(int completedDays, int totalDays, bool isComplete) async {
+      showModalBottomSheet(
+          backgroundColor: Colors.transparent,
+          isScrollControlled: true,
+          context: context,
+          builder: (context) {
+            return ShowBottomSheet(
+              completedDays: completedDays,
+              totalDays: totalDays,
+              isComplete: isComplete,
+            );
+          });
   }
 }

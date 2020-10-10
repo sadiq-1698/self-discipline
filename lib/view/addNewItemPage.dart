@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:self_discipline/components/helpers/ensureVisibleWhenFocused.dart';
 
 class AddNewItemPage extends StatelessWidget {
-  FocusNode _focusNodeTaskName = FocusNode();
-  FocusNode _focusNodeTaskDays = FocusNode();
+  final FocusNode _focusNodeTaskName = FocusNode();
+  final FocusNode _focusNodeTaskDays = FocusNode();
 
-  TextEditingController _controllerTaskName = new TextEditingController();
-  TextEditingController _controllerTaskDays = new TextEditingController();
+  final TextEditingController _controllerTaskName = new TextEditingController();
+  final TextEditingController _controllerTaskDays = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +33,10 @@ class AddNewItemPage extends StatelessWidget {
           child: Column(
             children: <Widget>[
               _textFieldTask(
-                  _focusNodeTaskName, _controllerTaskName, "Add a task here"),
+                  _focusNodeTaskName, _controllerTaskName, "Add a task here", false),
               SizedBox(height: 20.0),
-              _textFieldDays(
-                  _focusNodeTaskDays, _controllerTaskDays, "Number of days"),
+              _textFieldTask(
+                  _focusNodeTaskDays, _controllerTaskDays, "Number of days", true),
               SizedBox(height: 20.0),
               _addTaskButton(),
             ],
@@ -45,23 +45,11 @@ class AddNewItemPage extends StatelessWidget {
   }
 
   Widget _textFieldTask(FocusNode _focusNode, TextEditingController _controller,
-      String _labelText) {
+      String _labelText, bool isNumber) {
     return EnsureVisibleWhenFocused(
       focusNode: _focusNode,
       child: TextFormField(
-        controller: _controller,
-        decoration: _textFieldInputDecoration(_labelText),
-        onSaved: (String val) {},
-      ),
-    );
-  }
-
-  Widget _textFieldDays(FocusNode _focusNode, TextEditingController _controller,
-      String _labelText) {
-    return EnsureVisibleWhenFocused(
-      focusNode: _focusNode,
-      child: TextFormField(
-        keyboardType: TextInputType.number,
+        keyboardType: isNumber ? TextInputType.number :TextInputType.numberWithOptions(),
         controller: _controller,
         decoration: _textFieldInputDecoration(_labelText),
         onSaved: (String val) {},
@@ -81,8 +69,7 @@ class AddNewItemPage extends StatelessWidget {
               onPressed: () {},
               child: Text(
                 "Add Task",
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style:TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ),
           ),
